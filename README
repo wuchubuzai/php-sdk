@@ -4,8 +4,15 @@ services provided by http://www.wuchubuzai.com/
 
 /**
  * @version 2012.04.02
- * @license See the included LICENSE file for more information [ https://github.com/wuchubuzai/php-sdk/LICENSE ]
+ * @license See the included LICENSE file for more information [ https://github.com/wuchubuzai/php-sdk/blob/master/LICENSE ]
  * @link http://www.wuchubuzai.com/
  * Twitter information:  https://twitter.com/wuchubuzai_labs
  *                       https://twitter.com/wuchubuzai_dev
  */
+ 
+ If you find an issue:
+ 
+ 1.  FORK IT:  https://github.com/wuchubuzai/php-sdk/fork_select
+ 2.  Create an issue:  https://github.com/wuchubuzai/php-sdk/issues
+ 
+ 
