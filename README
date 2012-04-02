@@ -2,6 +2,10 @@
 The Wuchubuzai PHP SDK has been developed to allow php developers ( http://www.php.net/ ) the ability to consume
 services provided by http://www.wuchubuzai.com/ 
 
-v0.01a
-
-More information to follow ....
+/**
+ * @version 2012.04.02
+ * @license See the included LICENSE file for more information [ https://github.com/wuchubuzai/php-sdk/LICENSE ]
+ * @link http://www.wuchubuzai.com/
+ * Twitter information:  https://twitter.com/wuchubuzai_labs
+ *                       https://twitter.com/wuchubuzai_dev
+ */

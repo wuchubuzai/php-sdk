@@ -1,13 +1,12 @@
 <?php
 /**
- *
- * @copyright wuchubuzai | 无处不在 $Date$
- * @author $Author$
- * @version $Revision$
- * @link $HeadURL$
- *
+ * Wuchubuzai PHP-SDK
+ * @version 2012.04.02
+ * @license See the included LICENSE file for more information [ https://github.com/wuchubuzai/php-sdk/LICENSE ]
+ * @link http://www.wuchubuzai.com/
+ * Twitter information:  https://twitter.com/wuchubuzai_labs
+ *                       https://twitter.com/wuchubuzai_dev
  */
-
 class WuchubuzaiAPI {
 
 	public $apiUrl = 'dev.api.wuchubuzai.com';

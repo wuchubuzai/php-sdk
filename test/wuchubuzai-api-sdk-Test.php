@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Unit test for the Wuchubuzai PHP-SDK
+ *
+ * @version 2012.04.02
+ * @license See the included LICENSE file for more information [ https://github.com/wuchubuzai/php-sdk/LICENSE ]
+ * @link http://www.wuchubuzai.com/
+ * Twitter information:  https://twitter.com/wuchubuzai_labs
+ *                       https://twitter.com/wuchubuzai_dev
+ */
 class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 
 	private static $sdk = null;
