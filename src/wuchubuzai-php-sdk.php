@@ -22,7 +22,7 @@ class WuchubuzaiAPI {
 
 		if (API_URL) $this->apiUrl = API_URL;
 
-		if (defined(USE_HTTPS) && strtolower(USE_HTTPS) == 'true') $this->apiUrl = 'https://' . $this->apiUrl;
+		if (USE_HTTPS) $this->apiUrl = 'https://' . $this->apiUrl;
 		else $this->apiUrl = 'http://' . $this->apiUrl;
 
 		if (API_KEY) $this->apiKey = API_KEY;
@@ -46,6 +46,10 @@ class WuchubuzaiAPI {
 		} else {
 			if (strtoupper($method) == 'GET' || strtoupper($method) == 'SEARCH') {
 				$data = array('appId' => APPLICATION_ID,'id' => $objectId,'cols' => $attributes);
+			} else if (strtoupper($method) == 'PUT') {
+				if (!key_exists('id', $attributes)) {
+					throw new WuchubuzaiAPIException("id is mandatory for a PUT request");
+				}
 			}
 		}
 

@@ -14,8 +14,8 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 	private static $restKey = null;
 	private static $uid = null;
 
-	private $testUser = '';
-	private $testUserPass = '';
+	private static $testUser = null;
+	private static $testUserPass = null;
 	private $debug = false;
 
 	protected function setUp() {
@@ -24,10 +24,15 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 			self::$sdk = new WuchubuzaiAPI();
 			if ($this->debug) self::$sdk->enableDebug();
 		}
+
+		self::$testUser = API_TEST_USER;
+		self::$testUserPass = API_TEST_PASS;
+
 	}
 
 	public function testConfiguration() {
-		$this->assertEquals('http://sbx.api.wuchubuzai.com', self::$sdk->getApiUrl());
+		if (!USE_HTTPS) $this->assertEquals('http://' . API_URL, self::$sdk->getApiUrl());
+		else $this->assertEquals('https://' . API_URL, self::$sdk->getApiUrl());
 	}
 
 	public function testGetWithNoRestKey() {
@@ -36,7 +41,7 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPOSTUserAuthentication() {
-		self::$sdk->post("accounts", array('email' => $this->testUser, 'password' => $this->testUserPass));
+		self::$sdk->post("accounts", array('email' => self::$testUser, 'password' => self::$testUserPass));
 		$this->assertEquals("API_SUCCESS_000002", self::$sdk->output->json['success_code']);
  		self::$restKey = self::$sdk->output->json['rest_key'];
  		self::$uid = self::$sdk->output->json['id'];
@@ -71,8 +76,8 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 	public function testMicroBlogPost() {
 		if (self::$uid != null && self::$restKey != null) {
 			try {
-				self::$sdk->put("user", self::$uid, self::$restKey, $attributes=array('micro_blog' => 'i am cool.'));
-				var_dump(self::$sdk->output);
+				self::$sdk->put("user", self::$uid, self::$restKey, $attributes=array('id' => self::$uid, 'micro_blog' => 'i am cool.'));
+				$this->assertEquals('i am cool.', self::$sdk->output->json['micro_blog']);
 			} catch (WuchubuzaiAPIException $e) {
 				$this->assertEquals('failed to decode json', $e->getMessage());
 			}
