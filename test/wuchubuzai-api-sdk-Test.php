@@ -27,7 +27,7 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConfiguration() {
-		$this->assertEquals('http://dev.api.wuchubuzai.com', self::$sdk->getApiUrl());
+		$this->assertEquals('http://sbx.api.wuchubuzai.com', self::$sdk->getApiUrl());
 	}
 
 	public function testGetWithNoRestKey() {
@@ -67,6 +67,22 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+
+	public function testMicroBlogPost() {
+		if (self::$uid != null && self::$restKey != null) {
+			try {
+				self::$sdk->put("user", self::$uid, self::$restKey, $attributes=array('micro_blog' => 'i am cool.'));
+				var_dump(self::$sdk->output);
+			} catch (WuchubuzaiAPIException $e) {
+				$this->assertEquals('failed to decode json', $e->getMessage());
+			}
+		} else {
+			$this->markTestIncomplete("invalid rest key / uid");
+		}
+	}
+
+
+
 	/**
 	 * Testing SEARCH
 	 */
@@ -88,7 +104,6 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 			}
 		} else {
 			$this->markTestIncomplete("invalid rest key / uid");
-			var_dump($this);
 		}
 	}
 

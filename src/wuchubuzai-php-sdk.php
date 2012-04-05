@@ -41,8 +41,13 @@ class WuchubuzaiAPI {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$data = array();
-		if ($attributes == null) $data = array('appId' => APPLICATION_ID,'id' => $objectId);
-		else $data = array('appId' => APPLICATION_ID,'id' => $objectId,'cols' => $attributes);
+		if ($attributes == null) {
+			$data = array('appId' => APPLICATION_ID,'id' => $objectId);
+		} else {
+			if (strtoupper($method) == 'GET' || strtoupper($method) == 'SEARCH') {
+				$data = array('appId' => APPLICATION_ID,'id' => $objectId,'cols' => $attributes);
+			}
+		}
 
 		if (isset($targetLanguage)) $data['locale'] = $targetLanguage;
 		if (isset($rest_key)) $data['rest_key'] = $rest_key;
@@ -72,6 +77,7 @@ class WuchubuzaiAPI {
 
 			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+			if ($this->debug) var_dump($data);
 		}
 
 		$output = curl_exec($ch);
