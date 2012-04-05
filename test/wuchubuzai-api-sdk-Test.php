@@ -27,7 +27,7 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConfiguration() {
-		$this->assertEquals('http://sbx.api.wuchubuzai.com', self::$sdk->getApiUrl());
+		$this->assertEquals('http://dev.api.wuchubuzai.com', self::$sdk->getApiUrl());
 	}
 
 	public function testGetWithNoRestKey() {
@@ -54,14 +54,57 @@ class testWuchuApiGET extends PHPUnit_Framework_TestCase {
 
 	public function testInteractions() {
 		if (self::$uid != null && self::$restKey != null) {
-			self::$sdk->post("interactions", array('rest_key' => self::$restKey, 'uid' => self::$uid, 'method' => 'load_session'));
-			$this->assertEquals(self::$uid . '@chat.wuchubuzai.com', self::$sdk->output->json['jid']);
+			try {
+				self::$sdk->post("interactions", array('rest_key' => self::$restKey, 'uid' => self::$uid, 'method' => 'load_session'));
+				$this->assertEquals(self::$uid . '@chat.wuchubuzai.com/wuchubuzai_api', self::$sdk->output->json['jid']);
+			} catch (WuchubuzaiAPIException $e) {
+				// indicates that the xmpp
+				$this->assertEquals('empty output from cURL', $e->getMessage());
+			}
 		} else {
 			$this->markTestIncomplete("invalid rest key / uid");
 			var_dump($this);
 		}
 	}
 
+	/**
+	 * Testing SEARCH
+	 */
+
+	public function testSearchWithoutRestKey() {
+		try {
+			self::$sdk->search("user", null, null);
+		} catch (WuchubuzaiAPIException $e) {
+			$this->assertEquals('rest_key is required for SEARCH', $e->getMessage());
+		}
+	}
+
+	public function testSearchWithRestKeyAndNullAttributes() {
+		if (self::$uid != null && self::$restKey != null) {
+			try {
+				self::$sdk->search("user", self::$restKey, null);
+			} catch (WuchubuzaiAPIException $e) {
+				$this->assertEquals('attributes are required for SEARCH', $e->getMessage());
+			}
+		} else {
+			$this->markTestIncomplete("invalid rest key / uid");
+			var_dump($this);
+		}
+	}
+
+	public function testSearchWithRestKeyAndAttributes() {
+		if (self::$uid != null && self::$restKey != null) {
+			self::$sdk->search("user", self::$restKey, array('gender' => 2, 'seeking_gender' => 1));
+			if (isset(self::$sdk->output->json['error'])) {
+				$this->assertEquals('SearchAPIException', self::$sdk->output->json['error']);
+			} else {
+				$this->assertTrue(true);
+			}
+		} else {
+			$this->markTestIncomplete("invalid rest key / uid");
+			var_dump($this);
+		}
+	}
 
 }
 

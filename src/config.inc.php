@@ -12,7 +12,7 @@
 define('API_KEY', 1);
 define('API_SECRET_KEY', 1);
 define('APPLICATION_ID', 1);
-define('API_URL', 'sbx.api.wuchubuzai.com');
+define('API_URL', 'dev.api.wuchubuzai.com');
 define('USE_HTTPS', 'false');
 
 ?>
