@@ -13,6 +13,8 @@ define('API_KEY', 1);
 define('API_SECRET_KEY', 1);
 define('APPLICATION_ID', 1);
 define('API_URL', 'dev.api.wuchubuzai.com');
-define('USE_HTTPS', 'false');
+define('USE_HTTPS', false);
+define('API_TEST_USER', '');
+define('API_TEST_PASS', '');
 
 ?>
