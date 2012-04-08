@@ -47,8 +47,10 @@ class WuchubuzaiAPI {
 			if (strtoupper($method) == 'GET' || strtoupper($method) == 'SEARCH') {
 				$data = array('appId' => APPLICATION_ID,'id' => $objectId,'cols' => $attributes);
 			} else if (strtoupper($method) == 'PUT') {
-				if (!key_exists('id', $attributes)) {
+				if (!isset($objectId) && !key_exists('id', $attributes)) {
 					throw new WuchubuzaiAPIException("id is mandatory for a PUT request");
+				} else {
+					if (isset($objectId)) $data['id'] = $objectId;
 				}
 			}
 		}
