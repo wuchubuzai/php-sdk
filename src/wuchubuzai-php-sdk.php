@@ -87,12 +87,13 @@ class WuchubuzaiAPI {
 		}
 
 		$output = curl_exec($ch);
+		$wuchuOutput = new WuchubuzaiAPIOutput();
 
 		if(!$output) {
-			throw new WuchubuzaiAPIException("empty output from cURL");
+			throw new WuchubuzaiAPIException("empty output from cURL against: " + $this->getApiUrl());
 			return array('api_error' => 'null output received from API', 'raw_data' => $data, 'env' => $env, 'objectType' => $objectType, 'attributes' => $attributes);
 		} else {
-			$this->output->raw = $output;
+			$wuchuOutput->raw = $output;
 		}
 
 		$out = @json_decode($output, TRUE);
@@ -101,9 +102,10 @@ class WuchubuzaiAPI {
 			return array('api_error' => json_last_error(), 'raw_output' => $output, 'env' => $env, 'objectType' => $objectType, 'rest_key' => $rest_key, 'attributes' => $attributes);
 		} else {
 			unset($out['wuchubuzai_api']);
-			$this->output->json = $out;
+			$wuchuOutput->json = $out;
 		}
 
+		$this->output = $wuchuOutput;
 		return $this->output;
 
 	}
@@ -146,6 +148,10 @@ class WuchubuzaiAPI {
 
 }
 
+class WuchubuzaiAPIOutput {
+	public $json;
+	public $raw;
+}
 
 class WuchubuzaiAPIException extends Exception {}
 
